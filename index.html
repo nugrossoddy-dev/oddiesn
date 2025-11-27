@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/logo.png"></link>
+    <title>oddiesn - Photography Event Service</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', 'Helvetica', sans-serif;
+            background-color: #f8f9fa;
+            overflow-x: hidden;
+        }
+        
+        :root {
+            --primary-color: #0046FF;
+            --primary-light: #4d7fff;
+            --primary-dark: #0035cc;
+        }
+        
+        /* Header Styles */
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 70, 255, 0.1);
+            padding: 1rem 0;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color) !important;
+            letter-spacing: -1px;
+        }
+        
+        .nav-link {
+            color: #333 !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+        
+        .search-box {
+            position: relative;
+            max-width: 400px;
+        }
+        
+        .search-box input {
+            border-radius: 25px;
+            padding: 0.5rem 2.5rem 0.5rem 1rem;
+            border: 2px solid #e0e0e0;
+            transition: border-color 0.3s;
+        }
+        
+        .search-box input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(0, 70, 255, 0.15);
+        }
+        
+        .search-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 5rem 0;
+            margin-top: 76px;
+        }
+        
+        .hero-section h1 {
+            font-weight: 700;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-section p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .btn-primary-custom {
+            background-color: white;
+            color: var(--primary-color);
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Section Titles */
+        .section-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        /* Category Cards */
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 2px solid transparent;
+            height: 100%;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 70, 255, 0.2);
+            border-color: var(--primary-color);
+        }
+        
+        .category-card i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .category-card h5 {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        /* Photo Gallery */
+        .photo-card {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            background: white;
+            margin-bottom: 1.5rem;
+        }
+        
+        .photo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 70, 255, 0.3);
+        }
+        
+        .photo-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .photo-card-body {
+            padding: 1rem;
+        }
+        
+        .photo-card-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .photo-card-category {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        /* Booking Form */
+        .booking-form {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            padding: 0.75rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(0, 70, 255, 0.15);
+        }
+        
+        .btn-submit {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .btn-submit:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 70, 255, 0.3);
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 5rem;
+        }
+        
+        .footer-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-light);
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background: var(--primary-light);
+            transform: translateY(-3px);
+        }
+        
+        /* Filter Buttons */
+        .filter-btn {
+            background: white;
+            color: #333;
+            border: 2px solid #e0e0e0;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            margin: 0.25rem;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        /* Recommendations */
+        .recommendation-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ffc107;
+            color: #333;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        /* About Section */
+        .about-section {
+            background: white;
+            border-radius: 15px;
+            padding: 3rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-video {
+    width: 100%;
+    height: 350px;          /* bisa kamu atur sesuai selera */
+    object-fit: cover;       /* agar video memenuhi frame */
+    border-radius: 20px;     /* biar lebih aesthetic */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+        
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-section p {
+                font-size: 1rem;
+            }
+            
+            .photo-card img {
+                height: 200px;
+            }
+        }
+        .hero-section {
+    position: relative;
+    height: 100vh;           /* agar memenuhi layar seperti background image */
+    overflow: hidden;
+    padding: 120px 0;        /* tetap menjaga spacing */
+    display: flex;
+    align-items: center;
+}
+
+/* Video Background */
+.hero-section {
+    background-image: url('assets/pg3.jpg'); /* ganti dengan path gambarmu */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 120px 0; /* agar ruang atas–bawah lebih lega */
+    position: relative;
+}
+
+/* Tambahkan overlay agar tulisan lebih jelas */
+.hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.35); /* gelap transparan */
+    z-index: 1;
+}
+
+/* Konten tetap di atas overlay */
+.hero-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+
+
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <img src="assets/logo.png" alt="oddiesn" class="header-logo" height="75">
+            <a class="navbar-brand" href="#home">oddiesn</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#catalog">Katalog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#booking">Pemesanan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <!-- Hero Section -->
+<section id="home" class="hero-section">
+
+    <div class="container content-wrapper">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-animate="fadeInLeft">
+                <h1>Abadikan Momen Berharga Anda</h1>
+                <p>Platform pemesanan fotografi profesional untuk berbagai event spesial Anda</p>
+                <div class="search-box mt-4">
+                    <input type="text" class="form-control" id="heroSearch" placeholder="Cari event atau kategori...">
+                    <i class="bi bi-search"></i>
+                </div>
+                <button class="btn btn-primary-custom mt-3" onclick="scrollToSection('catalog')">Jelajahi Katalog</button>
+            </div>
+
+            <div class="col-lg-6 text-center" data-animate="fadeInRight">
+     
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Categories Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="section-title" data-animate="fadeInUp">Kategori Event</h2>
+            <div class="row mt-4">
+                <div class="col-md-3 col-sm-6 mb-4" data-animate="fadeInUp" data-delay="100">
+                    <div class="category-card" onclick="filterGallery('birthday')">
+                        <i class="bi bi-cake2"></i>
+                        <h5>Birthday Party</h5>
+                        <p class="text-muted">Ulang tahun yang tak terlupakan</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4" data-animate="fadeInUp" data-delay="200">
+                    <div class="category-card" onclick="filterGallery('wedding')">
+                        <i class="bi bi-heart"></i>
+                        <h5>Wedding</h5>
+                        <p class="text-muted">Pernikahan impian Anda</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4" data-animate="fadeInUp" data-delay="300">
+                    <div class="category-card" onclick="filterGallery('graduation')">
+                        <i class="bi bi-mortarboard"></i>
+                        <h5>Graduation</h5>
+                        <p class="text-muted">Pencapaian akademik</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4" data-animate="fadeInUp" data-delay="400">
+                    <div class="category-card" onclick="filterGallery('other')">
+                        <i class="bi bi-calendar-event"></i>
+                        <h5>Event Lainnya</h5>
+                        <p class="text-muted">Berbagai acara spesial</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Catalog -->
+    <section id="catalog" class="py-5 bg-light">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="section-title" data-animate="fadeInUp">Katalog Foto</h2>
+                <div class="search-box d-none d-md-block">
+                    <input type="text" class="form-control" id="catalogSearch" placeholder="Cari foto...">
+                    <i class="bi bi-search"></i>
+                </div>
+            </div>
+            
+            <!-- Filter Buttons -->
+            <div class="text-center mb-4" data-animate="fadeInUp">
+                <button class="filter-btn active" onclick="filterGallery('all')">Semua</button>
+                <button class="filter-btn" onclick="filterGallery('birthday')">Birthday</button>
+                <button class="filter-btn" onclick="filterGallery('wedding')">Wedding</button>
+                <button class="filter-btn" onclick="filterGallery('graduation')">Graduation</button>
+                <button class="filter-btn" onclick="filterGallery('other')">Lainnya</button>
+                <button class="filter-btn" onclick="filterGallery('recommended')">
+                    <i class="bi bi-star-fill"></i> Rekomendasi
+                </button>
+            </div>
+
+            <!-- Photo Gallery Grid -->
+            <div class="row" id="photoGallery">
+                <!-- Photos will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking" class="py-5">
+        <div class="container">
+            <h2 class="section-title mb-4" data-animate="fadeInUp">Pemesanan Layanan</h2>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="booking-form" data-animate="fadeInUp">
+                        <form id="bookingForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Nama Lengkap</label>
+                                    <input type="text" class="form-control" id="fullName" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">No. Telepon</label>
+                                    <input type="tel" class="form-control" id="phone" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Jenis Event</label>
+                                    <select class="form-select" id="eventType" required>
+                                        <option value="">Pilih Event</option>
+                                        <option value="birthday">Birthday Party</option>
+                                        <option value="wedding">Wedding</option>
+                                        <option value="graduation">Graduation</option>
+                                        <option value="corporate">Corporate Event</option>
+                                        <option value="other">Lainnya</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Tanggal Event</label>
+                                    <input type="date" class="form-control" id="eventDate" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Lokasi</label>
+                                    <input type="text" class="form-control" id="location" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Paket Layanan</label>
+                                <select class="form-select" id="package" required>
+                                    <option value="">Pilih Paket</option>
+                                    <option value="basic">Basic - Rp 1.500.000</option>
+                                    <option value="standard">Standard - Rp 2.500.000</option>
+                                    <option value="premium">Premium - Rp 4.000.000</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Catatan Tambahan</label>
+                                <textarea class="form-control" id="notes" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-submit">Kirim Pemesanan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5 bg-light">
+        <div class="container">
+            <div class="about-section" data-animate="fadeInUp">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h2 class="section-title">Tentang oddiesn</h2>
+                        <p class="mt-4">Oddiesn adalah platform pemesanan jasa fotografi profesional yang hadir untuk mengabadikan momen-momen berharga dalam hidup Anda. Dengan fotografer berpengalaman dan peralatan modern, kami siap memberikan hasil terbaik untuk setiap event spesial Anda. Platform ini dibuat oleh pendiri kami Aurelius Oddy Nugros Bisnis Digital' 5 dalam naungan Yayasan Gabriel</p>
+                        <p>Kami melayani berbagai jenis event mulai dari birthday party, wedding, graduation, hingga event korporat dan acara spesial lainnya. Kepuasan klien adalah prioritas utama kami.</p>
+                        <div class="mt-4">
+                            <h5 class="footer-title">Hubungi Kami</h5>
+                            <p><i class="bi bi-envelope me-2"></i> info@oddiesn.com</p>
+                            <p><i class="bi bi-phone me-2"></i> +62 812-3456-7890</p>
+                            <p><i class="bi bi-geo-alt me-2"></i> Jakarta, Indonesia</p>
+                        </div>
+
+                    </div>
+                   <div class="col-lg-6 text-center">
+    <video autoplay muted loop playsinline class="about-video">
+        <source src="assets/videoplayback.mp4" type="video/mp4">
+    </video>
+</div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h3 class="footer-title">oddiesn</h3>
+                    <p>Platform pemesanan fotografi profesional untuk berbagai event spesial Anda.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="footer-title">Link Cepat</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#home" class="text-white-50 text-decoration-none">Home</a></li>
+                        <li><a href="#catalog" class="text-white-50 text-decoration-none">Katalog</a></li>
+                        <li><a href="#booking" class="text-white-50 text-decoration-none">Pemesanan</a></li>
+                        <li><a href="#about" class="text-white-50 text-decoration-none">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="footer-title">Ikuti Kami</h5>
+                    <div class="social-icons">
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#"><i class="bi bi-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="bg-white-50">
+            <div class="text-center py-3">
+                <p class="mb-0">&copy; 2024 oddiesn. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Anime.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+    <script>
+        // Photo Gallery Data
+        const photos = [
+            { id: 1, title: 'Birthday Celebration', category: 'birthday', image: 'assets/pg1.jpg', recommended: true },
+            { id: 2, title: 'Wedding Moments', category: 'wedding', image: 'assets/pg2.jpg', recommended: true },
+            { id: 3, title: 'Graduation Day', category: 'graduation', image: 'assets/pg3.jpg', recommended: false },
+            { id: 4, title: 'Sweet Birthday', category: 'birthday', image: 'assets/pg4.jpg', recommended: true },
+            { id: 5, title: 'Perfect Wedding', category: 'wedding', image: 'assets/pg5.jpg', recommended: false },
+            { id: 6, title: 'Achievement Day', category: 'graduation', image: 'assets/pg6.JPG', recommended: false },
+            { id: 7, title: 'Special Moments', category: 'other', image: 'assets/pg7.JPG', recommended: true },
+            { id: 8, title: 'Corporate Event', category: 'other', image: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=500', recommended: false },
+            { id: 9, title: 'Romantic Wedding', category: 'wedding', image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=500', recommended: true },
+            { id: 10, title: 'Kids Birthday Party', category: 'birthday', image: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=500', recommended: false },
+            { id: 11, title: 'University Graduation', category: 'graduation', image: 'assets/pg8.jpg', recommended: true },
+            { id: 12, title: 'Outdoor Event', category: 'other', image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=500', recommended: false }
+        ];
+
+        // Initialize gallery on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            displayPhotos(photos);
+            initAnimations();
+            initSearch();
+            initBookingForm();
+            loadBookings();
+        });
+
+        // Display photos in gallery
+        function displayPhotos(photoList) {
+            const gallery = document.getElementById('photoGallery');
+            gallery.innerHTML = '';
+
+            photoList.forEach((photo, index) => {
+                const col = document.createElement('div');
+                col.className = 'col-md-4 col-sm-6 photo-item';
+                col.setAttribute('data-category', photo.category);
+                col.setAttribute('data-animate', 'fadeInUp');
+                col.setAttribute('data-delay', (index % 3) * 100);
+
+                col.innerHTML = `
+                    <div class="photo-card position-relative">
+                        ${photo.recommended ? '<span class="recommendation-badge"><i class="bi bi-star-fill"></i> Rekomendasi</span>' : ''}
+                        <img src="${photo.image}" alt="${photo.title}" onerror="this.src='https://via.placeholder.com/500x300/0046FF/ffffff?text=${photo.title}'">
+                        <div class="photo-card-body">
+                            <h6 class="photo-card-title">${photo.title}</h6>
+                            <p class="photo-card-category"><i class="bi bi-tag"></i> ${getCategoryName(photo.category)}</p>
+                        </div>
+                    </div>
+                `;
+
+                gallery.appendChild(col);
+            });
+
+            // Re-animate new elements
+            animateElements();
+        }
+
+        // Get category display name
+        function getCategoryName(category) {
+            const names = {
+                'birthday': 'Birthday Party',
+                'wedding': 'Wedding',
+                'graduation': 'Graduation',
+                'other': 'Event Lainnya'
+            };
+            return names[category] || category;
+        }
+
+        // Filter gallery by category
+        function filterGallery(category) {
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            let filteredPhotos;
+            if (category === 'all') {
+                filteredPhotos = photos;
+            } else if (category === 'recommended') {
+                filteredPhotos = photos.filter(p => p.recommended);
+            } else {
+                filteredPhotos = photos.filter(p => p.category === category);
+            }
+
+            displayPhotos(filteredPhotos);
+            scrollToSection('catalog');
+        }
+
+        // Search functionality
+        function initSearch() {
+            const searchInputs = ['heroSearch', 'catalogSearch'];
+            
+            searchInputs.forEach(inputId => {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    input.addEventListener('input', function(e) {
+                        const searchTerm = e.target.value.toLowerCase();
+                        const filtered = photos.filter(photo => 
+                            photo.title.toLowerCase().includes(searchTerm) ||
+                            photo.category.toLowerCase().includes(searchTerm)
+                        );
+                        displayPhotos(filtered);
+                    });
+                }
+            });
+        }
+
+        // Booking form handling
+        function initBookingForm() {
+            const form = document.getElementById('bookingForm');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const booking = {
+                    id: Date.now(),
+                    fullName: document.getElementById('fullName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    eventType: document.getElementById('eventType').value,
+                    eventDate: document.getElementById('eventDate').value,
+                    location: document.getElementById('location').value,
+                    package: document.getElementById('package').value,
+                    notes: document.getElementById('notes').value,
+                    timestamp: new Date().toISOString()
+                };
+
+                // Save to localStorage
+                let bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+                bookings.push(booking);
+                localStorage.setItem('bookings', JSON.stringify(bookings));
+
+                // Show success message
+                alert('Terima kasih! Pemesanan Anda telah berhasil dikirim. Kami akan menghubungi Anda segera.');
+                form.reset();
+
+                // Animate success
+                anime({
+                    targets: '.booking-form',
+                    scale: [1, 1.02, 1],
+                    duration: 500,
+                    easing: 'easeInOutQuad'
+                });
+            });
+        }
+
+        // Load bookings from localStorage
+        function loadBookings() {
+            const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+            console.log('Total bookings:', bookings.length);
+        }
+
+        // Smooth scroll to section
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                const offsetTop = element.offsetTop - 76;
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Initialize animations with Anime.js
+        function initAnimations() {
+            // Animate on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const element = entry.target;
+                        const animation = element.getAttribute('data-animate');
+                        const delay = element.getAttribute('data-delay') || 0;
+
+                        if (animation === 'fadeInUp') {
+                            anime({
+                                targets: element,
+                                translateY: [50, 0],
+                                opacity: [0, 1],
+                                duration: 800,
+                                delay: parseInt(delay),
+                                easing: 'easeOutCubic'
+                            });
+                        } else if (animation === 'fadeInLeft') {
+                            anime({
+                                targets: element,
+                                translateX: [-50, 0],
+                                opacity: [0, 1],
+                                duration: 800,
+                                delay: parseInt(delay),
+                                easing: 'easeOutCubic'
+                            });
+                        } else if (animation === 'fadeInRight') {
+                            anime({
+                                targets: element,
+                                translateX: [50, 0],
+                                opacity: [0, 1],
+                                duration: 800,
+                                delay: parseInt(delay),
+                                easing: 'easeOutCubic'
+                            });
+                        }
+
+                        observer.unobserve(element);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all elements with data-animate attribute
+            document.querySelectorAll('[data-animate]').forEach(el => {
+                el.style.opacity = '0';
+                observer.observe(el);
+            });
+        }
+
+        // Animate elements (called after dynamic content is added)
+        function animateElements() {
+            const elements = document.querySelectorAll('[data-animate]');
+            elements.forEach(el => {
+                const animation = el.getAttribute('data-animate');
+                const delay = el.getAttribute('data-delay') || 0;
+
+                if (animation === 'fadeInUp') {
+                    anime({
+                        targets: el,
+                        translateY: [50, 0],
+                        opacity: [0, 1],
+                        duration: 800,
+                        delay: parseInt(delay),
+                        easing: 'easeOutCubic'
+                    });
+                }
+            });
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.boxShadow = '0 4px 20px rgba(0, 70, 255, 0.15)';
+            } else {
+                navbar.style.boxShadow = '0 2px 10px rgba(0, 70, 255, 0.1)';
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                scrollToSection(targetId);
+
+                // Close mobile menu if open
+                const navbarCollapse = document.getElementById('navbarNav');
+                if (navbarCollapse.classList.contains('show')) {
+                    const bsCollapse = new bootstrap.Collapse(navbarCollapse);
+                    bsCollapse.hide();
+                }
+            });
+        });
+
+        // Add hover animation to category cards
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                anime({
+                    targets: this.querySelector('i'),
+                    scale: 1.2,
+                    rotate: '1turn',
+                    duration: 500,
+                    easing: 'easeInOutQuad'
+                });
+            });
+
+            card.addEventListener('mouseleave', function() {
+                anime({
+                    targets: this.querySelector('i'),
+                    scale: 1,
+                    duration: 300,
+                    easing: 'easeInOutQuad'
+                });
+            });
+        });
+
+        // Add parallax effect to hero section
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const heroIcon = document.querySelector('.hero-section .bi-camera');
+            if (heroIcon) {
+                heroIcon.style.transform = `translateY(${scrolled * 0.3}px) rotate(${scrolled * 0.05}deg)`;
+            }
+        });
+
+        // Photo card click animation
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.photo-card')) {
+                const card = e.target.closest('.photo-card');
+                anime({
+                    targets: card,
+                    scale: [1, 0.95, 1],
+                    duration: 300,
+                    easing: 'easeInOutQuad'
+                });
+            }
+        });
+
+        // Add entrance animation for hero section
+        anime({
+            targets: '.hero-section',
+            opacity: [0, 1],
+            duration: 1000,
+            easing: 'easeOutCubic'
+        });
+
+        // Floating animation for icons
+        setInterval(() => {
+            const aboutIcon = document.querySelector('.about-section .bi-camera-reels');
+            if (aboutIcon) {
+                anime({
+                    targets: aboutIcon,
+                    translateY: [-10, 10],
+                    duration: 2000,
+                    easing: 'easeInOutSine',
+                    direction: 'alternate',
+                    loop: 1
+                });
+            }
+        }, 4000);
+
+        // Form input focus animation
+        document.querySelectorAll('.form-control, .form-select').forEach(input => {
+            input.addEventListener('focus', function() {
+                anime({
+                    targets: this,
+                    scale: [1, 1.02, 1],
+                    duration: 300,
+                    easing: 'easeInOutQuad'
+                });
+            });
+        });
+
+        // Social icons hover effect
+        document.querySelectorAll('.social-icons a').forEach(icon => {
+            icon.addEventListener('mouseenter', function() {
+                anime({
+                    targets: this,
+                    scale: 1.2,
+                    rotate: 360,
+                    duration: 400,
+                    easing: 'easeInOutQuad'
+                });
+            });
+
+            icon.addEventListener('mouseleave', function() {
+                anime({
+                    targets: this,
+                    scale: 1,
+                    rotate: 0,
+                    duration: 400,
+                    easing: 'easeInOutQuad'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
